@@ -1,0 +1,34 @@
+\chapter{Remarks on the Data}
+\label{ch:data}
+
+
+We will assume the following, without proof:
+
+\begin{axiom}
+	$\source{*}$ is inherently consistent.
+\end{axiom}
+
+The consistency of the source database should be assumed because a replication of a database can only be as consistent as the original database, i.e. there is no way to have consistent data, starting from inconsistent data.
+
+Additionally, such is safe to assume, since the database constraints are checked at the source by the PostgreSQL server.
+
+Generally, 
+$\dest{\alpha} := \pi_{S}\left(\source{\alpha}\right)$
+over some subset $S$ of its columns,
+with one exception for table $\gamma$:
+
+$$
+\dest{\gamma} := \pi_{\dest{\alpha}.\text{id}, \source{\gamma}.*}
+\left(
+\source{\gamma} \bowtie_{\alpha.\text{email} = \gamma.\text{email}} \dest{\alpha}
+\right)
+$$
+
+
+\section{Aggregations}
+
+\begin{align*}
+\dest{\eta} &:= \pi_{\source{\eta}.\{\text{user, time, class}\}, n, C} \left( \\
+	&\sigma_{n := \text{count}(*), C := \sum \source{\eta}.\text{cost}} \left( \\
+		&G_{\text{user, time, class}} \left(\source{\eta}\right)\right)\right)
+\end{align*}

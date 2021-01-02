@@ -1,36 +1,13 @@
 \chapter{Time Travel Functionality}
 \label{ch:timetravel}
 
-Every table has one representation in the source database and another representation in the destination database.
-To avoid ambiguity, let us introduce the following notation:
-
-\begin{itemize}
-\item $\source{\omega}$ and $\dest{\omega}$ refer to the representation of some table $\omega$ at the source and destination databases respectively;
-\item $\source{*}$ and $\dest{*}$ refer to the representations of all tables collectively (i.e. the whole databases), at the source and destination databases respectively.
-\end{itemize}
+%\epigraph{%
+%    Marty McFly: Wait a minute, Doc. Are you telling me that you built a time machine$\dots$ out of a Postgres server?
+%	
+%    Dr. Emmett Brown: The way I see it, if you're gonna build a time machine, why not do it in style?
+%}{Back to the Future I}
 
 
-We will assume the following, without proof:
-
-\begin{axiom}
-$\source{*}$ is inherently consistent.
-\end{axiom}
-
-The consistency of the source database should be assumed because a replication of a database can only be as consistent as the original database, i.e. there is no way to have consistent data, starting from inconsistent data.
-
-Additionally, such is safe to assume, since the database constraints are checked at the source by the PostgreSQL server.
-
-Generally, 
-$\dest{\alpha} := \pi_{S}\left(\source{\alpha}\right)$
-over some subset $S$ of its columns,
-with one exception for table $\gamma$:
-
-$$
-\dest{\gamma} := \pi_{\dest{\alpha}.\text{id}, \source{\gamma}.*}
-    \left(
-        \source{\gamma} \bowtie_{\alpha.\text{email} = \gamma.\text{email}} \dest{\alpha}
-    \right)
-$$
 
 \section{Empty Validity Ranges}
 
@@ -45,4 +22,6 @@ This has the inherent meaning, in our domain, that two different records for the
 At first, this may seem an issue that could possibly be dismissed as very unlikely.
 Nevertheless, the presence of database transactions makes the significance of this scenario become evident.
 Within a transaction, different queries are evaluated and later performed as a single atomic\footnote{??? explain atomic} operation, thus resulting in several records being issued at the same instant.
+
+using database system clock ensures positive time drift
 
