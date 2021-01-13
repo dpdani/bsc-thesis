@@ -1,6 +1,7 @@
-% book
-% Required fields: author or editor, title, publisher, year. 
-% Optional fields: volume or number, series, address, edition, month, note.
+
+@String{today = {2021-01-12}}
+
+
 @book{dbms,
   author = {Ramakrishan R., Gehrke J.},
   title = {Database Management Systems},
@@ -10,40 +11,27 @@
 
 }
 
-% article
-% Required fields: author, title, journal, year. 
-% Optional fields: volume, number, pages, month, note.
-@article{donoho,
-  author = {Donoho D. L.},
-  title = {Compressed Sensing},
-  journal = {IEEE Trans. Inf. Theory},
-  volume = {52},
-  number = {4},
-  pages = {1289-1306},
-  year = {2006}
+@online{faq-covid,
+    author = {University of Trento},
+    title = {FAQ per tirocini avviati tramite ufficio Job Guidance},
+    date = {2020-03-23},
+    revised = {2020-06-04},
+    language = {Italian},
+    url = {https://www.unitn.it/alfresco/download/workspace/SpacesStore/e9af2533-6b75-4f2b-844e-6c3bd3828ceb/FAQ_TIROCINI_04_06_2020.pdf},
+    urldate = today,
 }
 
-% conference
-% same as inproceedings
-% Required fields: author, title, booktitle, year. 
-% Optional fields: editor, volume or number, series, pages, address, month, organization, publisher, note
-@conference{dalal,
-  author = {Dalal N., Triggs B.},
-  title = {Histograms of Oriented Gradients for Human Detection},
-  booktitle = {Computer Vision and Pattern Recognition (CVPR)},
-  address = {San Diego, USA},
-  year = {2005},
-  month = {06},
-  day = {20-26},
-  pages = {886-893},
+@manual{pg-docs,
+    organization = {The PostgreSQL Global Development Group},
+    title = {PostgreSQL 12 Documentation},
+    url = {https://www.postgresql.org/docs/12/},
+    urldate = today,
 }
 
-% website
-% as misc
-% Required fields: none. 
-% Optional fields: author, title, howpublished, month, year, note.
-@misc{ictbusiness,
-  title = {ICT business},
-  url = {http://www.ictbusiness.it/},
-  urldate = {2015-06-15}
+@online{cdc,
+    organization = {Debezium, Red Hat},
+    author = {Eric Murphy},
+    title = {Distributed Data for Microservices -- Event Sourcing vs. Change Data Capture},
+    url = {https://debezium.io/blog/2020/02/10/event-sourcing-vs-cdc/},
+    urldate = today,
 }

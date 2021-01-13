@@ -1,0 +1,97 @@
+% Data flow diagram
+% Author: David Fokkema
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{
+positioning,
+fit,
+arrows,
+petri,
+shapes.geometric,
+shapes.symbols
+}
+
+\usepackage[active,tightpage]{preview}
+\setlength\PreviewBorder{0pt}%
+
+
+\begin{document}
+\begin{center}
+\begin{preview}
+\begin{tikzpicture}[
+    node distance=5mm,
+    shorten >=1pt,
+    ->
+]
+
+\node[draw, tape] (tables) {Table Data};
+\node[draw, right=of tables] (wal) {Write-Ahead Log};
+\path (tables) edge (wal);
+\node[above=of tables, yshift=-5mm] (p) {\phantom{PostgreSQL}};
+\begin{scope}
+    \node[draw, cylinder, shape border rotate=90, aspect=0.1, fit=(tables)(wal)(p)] (postgres) {};
+\end{scope}
+\node[below=of postgres.north, yshift=-5pt] (po) {PostgreSQL};
+
+\node[draw, cloud, aspect=2, left=of postgres] (other) {Other Systems};
+\path (postgres) edge [pre, bend left] (other);
+\path (other) edge [pre, bend left] (postgres);
+
+\node[draw, right=of postgres, right=15mm] (debezium) {Debezium};
+\path (postgres) edge (debezium);
+
+\node[draw, below=of debezium, below=15mm] (kafka) {
+\small\begin{tabular}{c}
+{\normalsize Kafka} \\
+\emph{per-table topics}\\
+\begin{tabular}{cccc}
+$\alpha$&$\beta$&$\gamma$&$\delta$\\
+$\epsilon$&$\zeta$&$\eta$&$\theta$\\
+$\iota$&$\kappa$&$\lambda$&\\
+\end{tabular}
+\end{tabular}
+};
+\path (debezium) edge (kafka);
+
+\node[draw, below left=of kafka] (streams) {
+\small\begin{tabular}{c}
+{\normalsize Kafka Streams} \\
+\emph{per-table streams}\\
+\begin{tabular}{cccc}
+$\eta$&$\theta$&$\kappa$&$\lambda$\\
+\end{tabular}
+\end{tabular}
+};
+\path (kafka) edge (streams);
+
+\node[draw, above left=of streams] (connect) {
+\small\begin{tabular}{c}
+{\normalsize Kafka Connect} \\
+\emph{per-table connectors}\\
+\begin{tabular}{cccc}
+$\alpha$&$\beta$&$\gamma$&$\delta$\\
+$\epsilon$&$\zeta$&$\eta$&$\theta$\\
+$\iota$&$\kappa$&$\lambda$&\\
+\end{tabular}
+\end{tabular}
+};
+\path (kafka) edge node[auto,swap] {\small{except $\eta$, $\theta$, $\kappa$, $\lambda$}} (connect);
+\path (streams) edge (connect);
+
+\node[draw, cylinder, shape border rotate=90, aspect=0.1, left=of connect] (output) {Output Database};
+\path (connect) edge (output);
+
+\begin{scope}
+    \node[draw, dashed, fit=(postgres), label=above:{Data Source}] (ds) {};
+\end{scope}
+\begin{scope}
+    \node[draw, dashed, fit=(debezium)(kafka), label=above:{Broker}] (broker) {};
+\end{scope}
+\begin{scope}
+    \node[draw, dashed, fit=(streams)(connect)(output), label=below:{Consumers}] (consumers) {};
+\end{scope}
+
+\end{tikzpicture}
+\end{preview}
+\end{center}
+\end{document}

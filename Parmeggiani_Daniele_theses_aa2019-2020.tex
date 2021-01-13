@@ -25,6 +25,7 @@
 % \usepackage[paperheight=29.7cm,paperwidth=21cm,outer=1.5cm,inner=2.5cm,top=2cm,bottom=2cm]{geometry} % per definizione layout
 % \usepackage{titlesec} % per formato custom dei titoli dei capitoli
 \usepackage[hidelinks]{hyperref}
+\hypersetup{pdftex}
 
 %%%%%%%%%%%%%%
 % supporto lettere accentate
@@ -40,6 +41,9 @@
 \usepackage[english]{babel}
 \usepackage{csquotes}
 
+\def\mtoday{\the\year-\twodigits\month-\twodigits\day}
+\def\twodigits#1{\ifnum#1<10 0\fi\the#1}
+
 \usepackage[backend=biber, dateabbrev=false, urldate=comp]{biblatex}
 \addbibresource{biblio.bib}
 
@@ -48,10 +52,15 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 
-\newtheorem{axiom}{Assumption}
-\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
 \newtheorem{lemma}{Lemma}
 \newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{axiom}{Assumption}
+\newtheorem{observation}{Observation}
+\newtheorem{example}{Example}
 
 \newcommand{\source}[1]{\ensuremath{\text{source}\left[{#1}\right]}}
 \newcommand{\dest}[1]{\ensuremath{\text{dest}\left[{#1}\right]}}
@@ -59,7 +68,7 @@
 
 \begin{document}
 
-    \pagestyle{plain}
+%    \pagestyle{plain}
 
     % nessuna numerazione
     \pagenumbering{gobble} 
@@ -168,7 +177,7 @@
     % stile con ordinamento alfabetico in funzione degli autori
     %\bibliographystyle{plain}
     %\bibliography{biblio}\addcontentsline{toc}{chapter}{Bibliography}
-    \nocite{*}
+%    \nocite{*}
     \printbibliography\addcontentsline{toc}{chapter}{Bibliography}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

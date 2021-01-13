@@ -1,6 +1,8 @@
 \chapter{Remarks on the Data}
 \label{ch:data}
 
+\newcommand{\ind}{\ensuremath{\phantom{= =}}}
+
 
 We will assume the following, without proof:
 
@@ -27,8 +29,12 @@ $$
 
 \section{Aggregations}
 
-\begin{align*}
-\dest{\eta} &:= \pi_{\source{\eta}.\{\text{user, time, class}\}, n, C} \left( \\
-	&\sigma_{n := \text{count}(*), C := \sum \source{\eta}.\text{cost}} \left( \\
-		&G_{\text{user, time, class}} \left(\source{\eta}\right)\right)\right)
-\end{align*}
+\begin{align}
+&\dest{\eta} := M\bigl(\sigma^*_{n := \text{count}(*), C := \sum\text{cost}} \bigl( \nonumber \\
+&\ind G_{\text{user, time, class}} \bigl(\source{\eta}\bigr) \nonumber \\
+&\bigr)\bigr) \nonumber
+\end{align}
+
+
+\section{On Constraints}
+\subsection{On Foreign Key Constraints}

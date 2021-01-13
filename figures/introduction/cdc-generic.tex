@@ -1,0 +1,31 @@
+\documentclass{article}
+
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage[active,tightpage]{preview}
+
+\setlength\PreviewBorder{0pt}%
+
+\begin{document}
+
+\def\layersep{2.5cm}
+\begin{preview}
+\begin{tikzpicture}[shorten >=1pt,->, node distance=\layersep]
+    \tikzstyle{every pin edge} = [<-,shorten <=1pt]
+    \tikzstyle{source} = [draw,rectangle,minimum size=17pt,inner sep=10pt]
+    \tikzstyle{broker} = [source]
+    \tikzstyle{consumer} = [source]
+    \tikzstyle{etc} = [draw]
+    
+    \node[source] (source) at (0,0) {Data Source};
+    \node[broker] (broker) at (\layersep,0) {Broker};
+    \path (source) edge (broker);
+    
+    \foreach \y in {1,...,3} {%
+        \node[consumer] (consumer-\y) at (\layersep+\layersep,3-\y-1) {Consumer \y};
+        \path (broker) edge (consumer-\y.west);
+    }
+    \node[] (consumer-etc) at (\layersep+\layersep,-2) {\vdots};
+\end{tikzpicture}
+\end{preview}
+\end{document}
