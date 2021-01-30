@@ -24,10 +24,17 @@
 %
 %The new database would serve primarily their sales team, which would use it for usage analytics for existing customers.
 %This database will co-exist with the previous one, i.e. it will not replace the parts of it that it's replicating, but it would instead keep being updated with the change events triggering in the main database.
-%
-%
-%As the contents of this document pertains the work I've carried out within SpazioDati, all information relevant to their intellectual properties has been anonymized so as to not disclose it.
-%The methods for such anonymization have been portrayed in the following Section \ref{sec:non-disclosure}.
-%Nowhere in this document their customers' data is shown or cited, partly, or in whole.
 
+
+This Theses presents work carried out during my curricular internship, which pertains the design and implementation of a Change Data Capture system.
+An interest of the marketing team gave rise to the demand for the presented system, as explained in Chapter \ref{ch:intro}, which in essence solves the problem of capturing data change events from a data source, sometimes aggregating such data, and store them in a separate place for the marketing team to make further use thereof.
+
+An introduction to the scope and rationale for the system is presented in the first chapter.
+The several technologies that constitute the subsystems presented are explained in the second chapter, along with their structural composition into the overall system.
+Next, several properties of the data at hand are introduced in Chapter \ref{ch:data} and one of them is explored in greater detail in Chapter \ref{ch:timetravel}.
+Additionally, some paths for possible future enhancements are outlined in Chapter \ref{ch:future}.
 In Appendix \ref{ch:source} the listings of relevant source code are provided.
+
+As the contents of this document pertain the work I've carried out within SpazioDati, all information relevant to their intellectual properties has been anonymized so as to not disclose it.
+The methods for such anonymization have been portrayed in \S \ref{sec:non-disclosure}.
+Nowhere in this document their customers' data is shown or cited, partly, or in whole.

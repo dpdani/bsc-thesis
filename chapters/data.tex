@@ -1,8 +1,6 @@
 \chapter{Remarks on the Data}
 \label{ch:data}
 
-\newcommand{\ind}{\ensuremath{\phantom{= =}}}
-
 
 We will assume the following, without proof:
 
@@ -28,13 +26,16 @@ $$
 
 
 \section{Aggregations}
+\label{sec:aggregations}
 
 \begin{align}
-&\dest{\eta} := M\bigl(\sigma^*_{n := \text{count}(*), C := \sum\text{cost}} \bigl( \nonumber \\
+&\dest{\eta} := M\bigl(\sigma^*_{n := \text{count}(*), C := \sum\text{cost}} \bigl( \\
 &\ind G_{\text{user, time, class}} \bigl(\source{\eta}\bigr) \nonumber \\
 &\bigr)\bigr) \nonumber
 \end{align}
+\label{agg:eta}
 
 
 \section{On Constraints}
 \subsection{On Foreign Key Constraints}
+\label{sec:foreign-key}

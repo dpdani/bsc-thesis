@@ -65,6 +65,8 @@
 \newcommand{\source}[1]{\ensuremath{\text{source}\left[{#1}\right]}}
 \newcommand{\dest}[1]{\ensuremath{\text{dest}\left[{#1}\right]}}
 
+\newcommand{\ind}{\ensuremath{\phantom{= =}}}
+
 
 \begin{document}
 
@@ -87,6 +89,8 @@
 %  }
     \begin{center}
     \emph{Dedication}
+%	\emph{To my grandmother Lidia, and to the memory of my grandmother, Norma.}
+    
     \end{center}
     \clearpage
 %  \pagestyle{plain} % nessuna intestazione e pie pagina con numero al centro
@@ -110,10 +114,6 @@
 %%   allegati    
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-    % indice
-    \tableofcontents
-    \clearpage
     
     
           
@@ -136,9 +136,13 @@
 %      \titlespacing*{\chapter}{0pt}{0.59in}{0.02in}
 %      \titlespacing*{\section}{0pt}{0.20in}{0.02in}
 %      \titlespacing*{\subsection}{0pt}{0.10in}{0.02in}
-      
+	
     % sommario
     \input{abstract}
+    
+   	% indice
+    \tableofcontents
+    \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Nota

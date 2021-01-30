@@ -4,7 +4,7 @@
 The work presented in this Theses pertains the content of the curricular internship carried out from November 2020 through December of the same year.
 
 The curricular internship, part of the required credits for the Bachelor's Degree in Computer Science at the University of Trento, was performed remotely\footnote{%
-Due to regulations related to the Coronavirus epidemic, on-premises internship have been discouraged, and should have only been performed in case of necessity. Such was not the case for the work presented here. See \cite{faq-covid} for further details.}
+Due to regulations related to the Coronavirus epidemic, on-premises internships have been discouraged, and should have only been performed in case of necessity. Such was not the case for the work presented here. See \cite{faq-covid} for further details.}
 at SpazioDati, a technology company based in Trento, for their product Atoka.
 
 \begin{quote}
@@ -17,7 +17,7 @@ Atoka is the latest SpazioDati product which, thanks to Big Data and semantics, 
 Atoka allows you to create and extract extremely precise and targeted ``customer lists'', minimizing the information asymmetry that marketing managers and sales managers often face when undertaking a business development campaign.
 Atoka provides companies with all the information on potential targets, as well as for monitoring the evolution of the market and competitors.
 In other words, it facilitates B2B lead generation and allows access to a daily updated database of 6 million Italian companies and 4 million British companies, thanks to the partnership with Cerved Group.
-No other provider in Italy is able to support such numbers, the accuracy and freshness of the data are critical success factors: with 500 million web pages and 70 thousand news items analyzed, Atoka allows Sales and Marketing Intelligence actions never seen before in the Italian market.\footnote{%
+No other provider in Italy is able to support such numbers [\ldots]: with 500 million web pages and 70 thousand news items analyzed, Atoka allows Sales and Marketing Intelligence actions never seen before in the Italian market.\footnote{%
 Ibid.
 }
 \end{quote}
@@ -47,8 +47,7 @@ I.e. users pay a recurring fee for access to the service and may decide to stop 
 
 The marketing team has considered that a user, presented with insightful data about his usage of the product, would observe his possible under-usage, or learn techniques to a more efficient usage of Atoka.
 %Additionally, the marketing team would acquire an instrument to better understand how their customers utilize the product.
-
-This would be achieved by investigating said usage of the product, employing activities data recorded on their internal relational database services.
+This would be achieved by investigating the aforementioned usage of the product, employing activity data recorded on their internal relational database services.
 
 Since the queries intended for this application are computationally expensive, instead of running those queries directly on the main database, it was decided the database would emit data change events\footnote{%
 Here, \emph{data change events} refers to a series of events that can be used to reproduce the changes that have occurred in the database.
@@ -74,7 +73,8 @@ Which may also be a component of other systems.}
 Along with it, a CDC system requires a mechanism to deliver this data to some sub-systems that consume it.
 As such, we can outline at least three different components of a CDC system: a data source, a change data broker, and one or several consumer sub-systems.
 
-The broker is intended as a delivery mechanism for messages, by which we mean content (i.e. in our case, change data) interchanged between systems.
+A broker is intended as a delivery mechanism for messages, by which we mean content, interchanged between systems.
+For a CDC system, message content delivered by a broker is change data events, which are sent from the data source to the downstream consumers.
 What we expect from this sub-system is that messages are delivered to consumers in the order they were received, are consumed exactly once, and have negligible delay.
 
 In Figure \ref{fig:cdc-generic} a generic outline of a CDC system is presented.
@@ -245,7 +245,7 @@ $$
 A grouping with multiple keys, is still a grouping (i.e. a set of relations).
 \end{observation}
 
-\begin{definition}[Grouping selection]
+\begin{definition}[Grouping selection]\label{def:sigma*}
 Let $H$ be a grouping, $C$ the set of grouping keys of $H$, \emph{f}, and \emph{h} two aggregation functions\footnote{%
 Here ``aggregation functions'' is used to indicate some functions that produce a result from a succession. E.g. $\sum$, $\min$, and so on.
 }, and $c_i$, and $c_j$ two columns of any group in $H$.

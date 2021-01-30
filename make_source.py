@@ -13,13 +13,15 @@ with open('source auto.tex', 'w') as fout:
 
 """)
     for folder, _, files in os.walk('source/'):
-        for fpath in files:
+        for fpath in sorted(files):
             path = Path(folder) / fpath
             with open(path, 'r') as f:
                 if path.suffix == '.py':
                     lang = 'Python'
                 elif path.suffix == '.scala':
                     lang = 'Scala'
+                else:
+                    lang = ''
                 fout.write(f"""
 \\lstinputlisting[
     language={lang},

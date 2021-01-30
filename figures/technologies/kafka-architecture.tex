@@ -1,0 +1,60 @@
+% Data flow diagram
+% Author: David Fokkema
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{
+	positioning,
+	fit,
+	arrows,
+	petri,
+	shapes.geometric,
+	shapes.symbols
+}
+
+\usepackage[active,tightpage]{preview}
+\setlength\PreviewBorder{0pt}%
+
+
+\begin{document}
+\begin{center}
+\begin{preview}
+\begin{tikzpicture}[
+	node distance=5mm,
+	shorten >=1pt,
+	->
+]
+
+%\draw[step=5mm, black, thin] (-3,-5) grid (7,5);
+
+\node[draw, cylinder, shape border rotate=90, aspect=0.1] (broker-1) {Broker};
+\node[draw, cylinder, shape border rotate=90, aspect=0.1, below=of broker-1, xshift=2mm] (broker-2) {Broker};
+\node[draw, cylinder, shape border rotate=90, aspect=0.1, right=of broker-1, yshift=-2mm] (broker-3) {Broker};
+%\path (broker-1) edge [<->] (broker-2);
+%\path (broker-2) edge [<->] (broker-3);
+%\path (broker-3) edge [<->] (broker-1);
+\begin{scope}
+	\node[draw, fit=(broker-1)(broker-2)(broker-3), label=above:{Kafka Cluster}] (kafka) {};
+\end{scope}
+
+
+\node[left=of kafka, yshift=5mm] (prod) {Producers};
+\node[draw, below=of prod] (prod-1) {\phantom{=}};
+\node[draw, below=of prod-1] (prod-2) {\phantom{=}};
+\node[draw, below=of prod-2] (prod-3) {\phantom{=}};
+\node[below=of prod-3, yshift=5mm] {\vdots};
+
+
+\node[right=of kafka, yshift=5mm] (cons) {Consumers};
+\node[draw, below=of cons] (cons-1) {\phantom{=}};
+\node[draw, below=of cons-1] (cons-2) {\phantom{=}};
+\node[draw, below=of cons-2] (cons-3) {\phantom{=}};
+\node[below=of cons-3, yshift=5mm] {\vdots};
+
+
+\path (prod-1) edge [bend left] (broker-2);
+\path (broker-2) edge [bend right] (cons-2);
+
+\end{tikzpicture}
+\end{preview}
+\end{center}
+\end{document}
