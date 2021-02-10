@@ -39,7 +39,7 @@ A topic is further divided into so called partitions.\footnote{%
 	Nonetheless, in our use-case, as discussed shortly, we are not interested into splitting topics into multiple partitions, thus leaving little space to imprecision.
 }
 Generally, this division is most useful when considering the capability of some greater system, which is in part composed by Kafka, to meet increasing computational demands.
-Such is achieved by dividing homogeneous records into different partitions that are read by separate Consumers, thus enabling greater simplicity in the addition of Consumers, therefore expanding the computing capability assigned to the consumption of records.
+This is achieved by dividing homogeneous records into different partitions that are read by separate Consumers, thus enabling greater simplicity in the addition of Consumers, therefore expanding the computing capability assigned to the consumption of records.
 
 Since each partition is a log in itself, records are inherently ordered, but ordering \emph{between} partitions is not guaranteed; hence, partitioning topics, in our use-case, is not a viable option for increasing computational power, since ordering of data change events is key when reconstructing the source tables (cf. \S \ref{sec:tables-streams}).
 Meeting greater computational demands will therefore have to be achieved through different means, such as increasing the computing power assigned to individual Consumers.
@@ -68,12 +68,12 @@ From Kafka's documentation:
 	Kafka Connect is a tool for scalably and reliably streaming data between Apache Kafka and other systems. It makes it simple to quickly define connectors that move large collections of data into and out of Kafka.\footcite[\S 8.1]{kafka-docs}
 \end{quote}
 
-Kafka Connect provides two abstractions over very common use-cases, namely Source and Sink Connectors.
+\sloppy Kafka Connect provides two abstractions over very common use-cases, namely Source and Sink Connectors.
 Effectively, with regards to the terminology previously introduced, a Source Connector is a Producer and a Sink Connector is a Consumer.
 The switch in terminology is due to the fact that any Connector is entirely managed by the Kafka Connect runtime, implying that some of their logic is managed by Connect.
 Thus, developers are inevitably more restricted in their design choices over Connectors; nonetheless, this restriction provides greater simplicity in the definition of Producers and Consumers that follow the common pattern stated in the above quotation, which is the rationale for Kafka Connect itself.
 
-In order to allow external control, Kafka Connect provides a REST interface utilized for starting, stopping, pausing, and resuming Connectors, along with more functionalities designed to manage Kafka Connect itself.
+\fussy In order to allow external control, Kafka Connect provides a REST interface utilized for starting, stopping, pausing, and resuming Connectors, along with more functionalities designed to manage Kafka Connect itself.
 The rest of the operations are all managed internally, without the need for manual control.
 
 In our case, we will have Debezium Source Connectors (cf. \S \ref{sec:debezium}) for each source database, and as many Sink Connectors as there are tables in the output database.
@@ -87,34 +87,34 @@ For the purposes of this Section, it will suffice to say that the listed code ge
 Kafka Streams is a library that conveys various utilities for developing systems that operate with Kafka, most importantly it addresses systems that act both as consumers and as producers at the same time.
 In particular, this underlies the concept of a stream, intended as the computation carried out by a chain of Producers that write to certain topics, Consumers that read from said topics as well as produce to other topics, and so forth.
 
-Recalling our previous assertions on the duality of streams and tables (cf. \S \ref{sec:tables-streams}), let us utilize such notion to state the usage of Kafka Streams in our application.
+Recalling our previous assertions on the duality of streams and tables (cf. \S \ref{sec:tables-streams}), let us utilize such a notion to state the usage of Kafka Streams in our application.
 Since a stream can be interpreted as a table, modifications to a stream constitute changes to a table, thus the operations of relational algebra can be adapted and applied to streams as well.
-I will not endeavor into a formal demonstration of such notion, nonetheless I will try to convince the reader that such is true in the code provided.
+I will not endeavor into a formal demonstration of this notion, nonetheless I will try to convince the reader that this is true in the code provided.
 
 In our case, Kafka Streams are employed for the aggregations regarding certain tables, that will be described in \S \ref{sec:aggregations}.
 The code for components of the proposed system that make use of Kafka Streams are presented in Listings \ref{src:eu.spaziodati.metrics/streams/etaStream.scala}, \ref{src:eu.spaziodati.metrics/streams/kappaStream.scala},
 \ref{src:eu.spaziodati.metrics/streams/lambdaStream.scala}, and
 \ref{src:eu.spaziodati.metrics/streams/thetaStream.scala}.
 
-For instance, let us consider table $\eta$. In Aggregation \ref{agg:eta}, defined in the next Chapter, we have a grouping\footnote{%
+For instance, let us consider table $\eta$. In Query (\ref{agg:eta}), defined in the next Chapter, we have a grouping\footnote{%
 	Recall Definition \ref{def:G}.
 } with keys user, time, and class. In Listing \ref{src:eu.spaziodati.metrics/streams/etaStream.scala}, lines 29 -- 39, we utilize the Kafka Streams APIs to achieve the operation $G_{\text{user, time, class}}(\source{\eta})$.
 The subsequent grouping selection\footnote{%
 	Recall Definition \ref{def:sigma*}.
 } is performed on lines 48 and 49.
 
-By looking at this example, difference with the notation proposed in Chapter \ref{ch:intro} is evident.
+By looking at this example, the difference with the notation proposed in Chapter \ref{ch:intro} is evident.
 While the operator $\sigma^*$ points to the result of the aggregation, for instance in this case $\sum$, on line 49 we compute the value one data change event at a time.
 This difference is in line with the duality expressed in \S \ref{sec:tables-streams}.
 
 
 \section{PostgreSQL}
 
-Explanation of what a relational database is, is intentionally left to the several books\footnote{%
-	E.g. \cite{dbms}.
-} that provide a more thorough explanation than any that could possibly be expected in a section of a Theses.
-Additionally, the great majority of the intended audience for this document already has knowledge on this topic, therefore there is no strong rationale for which to indulge in such a broad explanation.
-Nonetheless, in this Section, particular aspects of the PostgreSQL relational database will be presented, when they pertain contents of this Theses.
+While a detailed discussion of the several technologies involved in operating the presented system is the intent of this Chapter, because of the fact that the great majority of the intended audience for this document already has knowledge on this topic and that the discussion itself would be too broad, an explanation of what a relational database is, is intentionally left to the several books\footnote{%
+	E.g. \cite{dbms}, \cite{db-systems}.
+} that already provide a thorough discussion.
+
+Nonetheless, in this Section, particular aspects of the PostgreSQL relational database will be presented, when they directly pertain contents of this Thesis.
 
 
 \subsection{Write Ahead Log}

@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{
+	positioning,
+	fit,
+	arrows,
+	arrows.meta,
+	petri,
+	shapes.geometric,
+	shapes.symbols
+}
+
+\usepackage[active,tightpage]{preview}
+\setlength\PreviewBorder{0pt}%
+
+\usepackage{amsmath}
+\newcommand{\source}[1]{\ensuremath{\text{source}\left[{#1}\right]}}
+
+\tikzset{
+	.../.tip={[sep=1pt 1]
+		Round Cap[]. Circle[length=0pt 1] Circle[length=0pt 1] Circle[length=0pt 1, sep=0pt]}
+}
+
+\begin{document}
+\begin{center}
+\begin{preview}
+\begin{tikzpicture}[
+	node distance=5mm,
+	shorten >=1pt,
+	->,
+]
+
+%\draw[step=5mm, black, thin] (-3,-5) grid (7,5);
+
+\node[draw] (source) {$\source{\eta}$};
+\node[draw, right=of source] (filter-1) {filter};
+\node[draw, right=of filter-1] (map) {map};
+\node[draw, right=of map] (key) {key select};
+\node[draw, right=of key] (filter-2) {filter};
+
+\node[draw, right=of filter-2, trapezium, trapezium left angle=60, trapezium right angle=120] (topic) {topic: \ldots-repartition};
+
+\node[right=of topic] (ellipsis) {};
+
+\node[below=of source] (ellipsis-2) {};
+\node[draw, right=of ellipsis-2] (aggregate) {aggregate};
+\node[draw, right=of aggregate] (to-stream) {to stream};
+\node[draw, right=of to-stream] (map-values) {map values};
+
+\node[draw, right=of map-values, trapezium, trapezium left angle=60, trapezium right angle=120] (out) {topic: processed-$\eta$};
+
+\path (source) edge (filter-1);
+\path (filter-1) edge (map);
+\path (map) edge (key);
+\path (key) edge (filter-2);
+\path (filter-2) edge (topic);
+\path[-...] (topic) edge (ellipsis);
+
+\path[...->] (ellipsis-2) edge (aggregate);
+\path (aggregate) edge (to-stream);
+\path (to-stream) edge (map-values);
+\path (map-values) edge (out);
+
+\end{tikzpicture}
+\end{preview}
+\end{center}
+\end{document}

@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{
+	positioning,
+	fit,
+	arrows,
+	petri,
+	shapes.geometric,
+	shapes.symbols
+}
+
+\usepackage[active,tightpage]{preview}
+\setlength\PreviewBorder{0pt}%
+
+
+\begin{document}
+\begin{center}
+\begin{preview}
+\begin{tikzpicture}[
+	node distance=5mm,
+	shorten >=1pt,
+	->
+]
+
+%\draw[step=5mm, black, thin] (-3,-5) grid (7,5);
+
+\node (alpha) at (-1,-1) {$\alpha$};  % user
+\node (beta) at (0,-1) {$\beta$};  % customer
+\node (gamma) at (-2,0) {$\gamma$};  % cerved user
+\node (delta) at (-3,0) {$\delta$};  % sales to client
+\node (epsilon) at (-1,0) {$\epsilon$};  % journal
+\node (zeta) at (0,-2) {$\zeta$};  % user plan
+\node (eta) at (-2,-1) {$\eta$};  % export status
+\node (theta) at (-2,-2) {$\theta$};  % single company export status
+\node (iota) at (-1,-2) {$\iota$};  % credits bucket
+\node (kappa) at (-3,-1) {$\kappa$};  % extra journal
+\node (lambda) at (-3,-2) {$\lambda$};  % history log
+
+\path (alpha) edge (beta);
+\path (gamma) edge (alpha);
+\path (eta) edge (alpha);
+\path (theta) edge (alpha);
+\path (iota) edge (zeta);
+\path (epsilon) edge (alpha);
+\path (epsilon) edge (beta);
+\path (zeta) edge (beta);
+%\path (zeta) edge ();
+
+\end{tikzpicture}
+\end{preview}
+\end{center}
+\end{document}

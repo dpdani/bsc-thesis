@@ -1,7 +1,7 @@
 \chapter{Introduction}
 \label{ch:intro}
 
-The work presented in this Theses pertains the content of the curricular internship carried out from November 2020 through December of the same year.
+The work presented in this Thesis pertains to the content of the curricular internship carried out from November 2020 through December of the same year.
 
 The curricular internship, part of the required credits for the Bachelor's Degree in Computer Science at the University of Trento, was performed remotely\footnote{%
 Due to regulations related to the Coronavirus epidemic, on-premises internships have been discouraged, and should have only been performed in case of necessity. Such was not the case for the work presented here. See \cite{faq-covid} for further details.}
@@ -26,14 +26,14 @@ Ibid.
 \section{Non Disclosure}
 \label{sec:non-disclosure}
 
-In this document several information internal to SpazioDati is referenced.
-In order to avoid disclosing information relevant to their intellectual property, the relational tables later referenced in this Theses have been anonymized.
+In this document information internal to SpazioDati is referenced.
+In order to avoid disclosing information relevant to their intellectual property, the relational tables later referenced in this Thesis have been anonymized.
 
 In particular the names of the eleven tables referenced have been replaced with the Greek letters $\alpha$, $\beta$, $\gamma$, $\delta$, $\epsilon$, $\zeta$, $\eta$, $\theta$, $\iota$, $\kappa$, and $\lambda$.
 Additionally, referenced column names do not represent the real names used in SpazioDati; nevertheless they provide a sensible metaphor to their actual counterpart. 
 
 TODO
-The contents of this Theses have been reviewed by SpazioDati and they have acknowledged this document does not contain information sensitive to either their customers or their intellectual properties.
+The contents of this Thesis have been reviewed by SpazioDati and they have acknowledged this document does not contain information sensitive to either their customers or their intellectual properties.
 
 
 \section{Problem Statement}
@@ -56,7 +56,7 @@ The actual meaning of this expression will become clearer in \S \ref{sec:cdc}.
 
 By design, such a mechanism effectively produces data duplication, but impacting the performance of Atoka's database service (thus degrading the overall user experience) was valued a problem much greater than the expense of data replication.
 
-The queries carried out by the marketing team are, though, of little concern for this Theses.
+The queries carried out by the marketing team are, though, of little concern for this Thesis.
 Our interest lies in making the data involved available to the team, which will later employ it as they deem fit.
 
 
@@ -70,7 +70,7 @@ For further reference see \cite{cdc}.
 
 With \emph{change data} we refer to data regarding a modification of some data source's contents; thus, logically, CDC systems are composed of at least a data source.\footnote{%
 Which may also be a component of other systems.}
-Along with it, a CDC system requires a mechanism to deliver this data to some sub-systems that consume it.
+Along with it, a CDC system requires a mechanism to deliver this data to sub-systems that consume it.
 As such, we can outline at least three different components of a CDC system: a data source, a change data broker, and one or several consumer sub-systems.
 
 A broker is intended as a delivery mechanism for messages, by which we mean content, interchanged between systems.
@@ -80,7 +80,7 @@ What we expect from this sub-system is that messages are delivered to consumers 
 In Figure \ref{fig:cdc-generic} a generic outline of a CDC system is presented.
 
 Furthermore, in the case at hand, a PostgreSQL server is the data source, Apache Kafka (along with Kafka Connect, and a Debezium Connector) is the broker, and the several consumers are Kafka Connect Sinks, additionally enriched with Kafka Streams.\footnote{Cf. Chapter \ref{ch:techs}.}
-In Figure \ref{fig:cdc-complete} the overall system, i.e. the content of this Theses, is presented; relations to parts of a generic CDC system are outlined with dashes.
+In Figure \ref{fig:cdc-complete} the overall system, i.e. the content of this Thesis, is presented; relations to parts of a generic CDC system are outlined with dashes.
 
 As previously mentioned, the presented CDC system's output is stored in a PostgreSQL database, which has been specifically created for the purpose discussed in \S \ref{sec:problem-statement}.
 It must not be confused with the data source.
@@ -95,7 +95,7 @@ It must not be confused with the data source.
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/introduction/cdc-complete}
-\caption{An Outline of the CDC System presented in this Theses.}
+\caption{An Outline of the CDC System presented in this Thesis.}
 \label{fig:cdc-complete}
 \end{figure}
 
@@ -106,7 +106,7 @@ It must not be confused with the data source.
 
 We have since said that there would be a relational database as data source, another one as the output of the CDC system, and in between we have talked about some \emph{events}.
 Clearly, as these events are materialized as messages, they do not pertain to a relational data model; instead they refer to a streaming data model, in which several messages are interchanged.
-Spontaneously, a question arises: how do these two models coexist and sustain a back and forth translation?
+A question arises: how do these two models coexist and sustain a back and forth translation?
 
 The answer is to be found in the two fundamental concepts of the models.
 %In this Section, I will sustain the following claim: 
@@ -132,7 +132,7 @@ Considering all of the above, we can conclude that the streaming of data change 
 
 In the following chapters we'll make use of standard notation for Relational Algebra, best described in \cite[Chapter 4]{dbms}.
 
-Additionally, further notation will be introduced in order to allow for clarity between table representations, and formal discussion of aggregation queries.
+Additionally, further notation will be introduced in order to allow for clarity between table representations, as well as formal discussion of aggregation queries.
 
 
 \subsection{Source and Destination Tables}
@@ -141,7 +141,6 @@ Every table has one representation in the source database and another representa
 Thus simply referring to some table $\omega$ may be ambiguous, given the identical names of the two representations.
 
 To avoid such ambiguity, let us introduce the following notation:
-
 \begin{itemize}
 	\item $\source{\omega}$ and $\dest{\omega}$ refer to the representation of some table $\omega$ at the source and destination databases respectively;
 	\item $\source{*}$ and $\dest{*}$ refer to the representations of all tables collectively (i.e. the whole databases), at the source and destination databases respectively.
@@ -153,6 +152,7 @@ Therefore, $\source{\omega}$ refers to the source representation of table $\omeg
 
 
 \subsection{Aggregation Related Functions}
+\label{sec:notation-aggregation}
 
 Common constructs of Relational Algebra do not provide a way in which one can express aggregation queries.\footnote{%
 See remark in \cite[p.~154]{dbms}.
@@ -174,14 +174,14 @@ $$
 \end{definition}
 
 \begin{example}\label{eg:grouping}
-Let $\omega$ be the relation shown in Table \ref{tab:eg-grouping}.a.
-$G_m(\omega)$ is shown in Table \ref{tab:eg-grouping}.b.
+Let $\omega$ be the relation shown in Table \ref{tab:eg-grouping}(a).
+$G_m(\omega)$ is shown in Table \ref{tab:eg-grouping}(b).
 
 \begin{table}
 \begin{center}
 (a)
-\begin{tabular}{ll}
-\emph{m} & \emph{n} \\
+\begin{tabular}{cc}
+$m$ & $n$ \\
 \hline
 a & 1 \\
 b & 5 \\
@@ -189,33 +189,33 @@ a & 3 \\
 \end{tabular}
 \hspace{1cm}
 (b)
-\begin{tabular}{ll}
-\emph{m} & \emph{n} \\
+\begin{tabular}{cc}
+$m$ & $n$ \\
 \hline
 a & 1 \\
 a & 3 \\
 \end{tabular}
-\begin{tabular}{ll}
-\emph{m} & \emph{n} \\
+\begin{tabular}{cc}
+$m$ & $n$ \\
 \hline
 b & 5
 \end{tabular}
 \hspace{1cm}
 (c)
-\begin{tabular}{ll}
-\emph{m} & \emph{n} \\
+\begin{tabular}{cc}
+$m$ & $\sum n$ \\
 \hline
 a & 4
 \end{tabular}
-\begin{tabular}{ll}
-\emph{m} & \emph{n} \\
+\begin{tabular}{cc}
+$m$ & $\sum n$ \\
 \hline
 b & 5
 \end{tabular}
 
 (d)
-\begin{tabular}{ll}
-\emph{m} & \emph{n} \\
+\begin{tabular}{cc}
+$m$ & $\sum n$ \\
 \hline
 a & 4\\
 b & 5
@@ -233,7 +233,7 @@ Thus, the output of the grouping generation operator is \emph{not} a relation.
 Since every construct of Relational Algebra satisfies the closure property with respect to $\mathcal{R}$, the $G$ operator from Definition (\ref{def:G}) cannot be considered part of Relational Algebra.
 \end{observation}
 
-\begin{definition}[Grouping with multiple keys]
+\begin{definition}[Grouping with multiple keys]\label{def:G-keys}
 Let $C$ be a set of grouping keys, and $\omega$ any relation.
 $G_C(\omega)$ is defined as
 $$
@@ -247,7 +247,7 @@ A grouping with multiple keys, is still a grouping (i.e. a set of relations).
 
 \begin{definition}[Grouping selection]\label{def:sigma*}
 Let $H$ be a grouping, $C$ the set of grouping keys of $H$, \emph{f}, and \emph{h} two aggregation functions\footnote{%
-Here ``aggregation functions'' is used to indicate some functions that produce a result from a succession. E.g. $\sum$, $\min$, and so on.
+Here ``aggregation functions'' is used to indicate some functions that produce a single result from an input set. E.g. $\sum$, $\min$, and so on.
 }, and $c_i$, and $c_j$ two columns of any group in $H$.
 The grouping selection operation $\sigma^*$ is defined as the grouping
 $$
@@ -258,7 +258,7 @@ $$
 \end{definition}
 
 \begin{example}\label{eg:grouping-selection}
-Continuing from Example \ref{eg:grouping}, let us consider $\sigma^*_{\sum{n}}(G_m(\omega))$, as shown in Table \ref{tab:eg-grouping}.c.
+Continuing from Example \ref{eg:grouping}, let us consider $\sigma^*_{\sum{n}}(G_m(\omega))$, as shown in Table \ref{tab:eg-grouping}(c).
 \end{example}
 
 \begin{observation}
@@ -274,7 +274,7 @@ $$
 \end{definition}
 
 \begin{example}\label{eg:grouping-merge}
-Continuing from Example \ref{eg:grouping-selection}, let us now consider $M\Big(\sigma^*_{\sum{n}}(G_m(\omega))\Big)$, as shown in Table \ref{tab:eg-grouping}.d.
+Continuing from Example \ref{eg:grouping-selection}, let us now consider $M\Big(\sigma^*_{\sum{n}}\big(G_m(\omega)\big)\Big)$, as shown in Table \ref{tab:eg-grouping}(d).
 \end{example}
 
 \begin{proposition}
@@ -285,3 +285,8 @@ Notwithstanding Observation (\ref{obs:G-not-in-R}); from Definition (\ref{def:G}
 
 A union of relations is a common operation of Relational Algebra, thus the result of $M(H) \in \mathcal{R}$, for any grouping $H$. 
 \end{proof}
+
+Having given evidence for a necessity of an extension to Relational Algebra in order to express aggregations, let us borrow standard notation for use throughout the next chapters.
+Consider the $\gamma$ operator as defined in \cite[\S 5.2.4]{db-systems}.
+It is equivalent to the composition of operators previously defined in this section; for instance consider Example (\ref{eg:grouping-merge}) and see that
+$$\gamma_{m, \sum n} = M\Big(\sigma^*_{\sum n} \big( G_m(\omega) \big) \Big) \; .$$

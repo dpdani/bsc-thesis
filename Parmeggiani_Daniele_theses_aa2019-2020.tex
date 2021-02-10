@@ -25,7 +25,6 @@
 % \usepackage[paperheight=29.7cm,paperwidth=21cm,outer=1.5cm,inner=2.5cm,top=2cm,bottom=2cm]{geometry} % per definizione layout
 % \usepackage{titlesec} % per formato custom dei titoli dei capitoli
 \usepackage[hidelinks]{hyperref}
-\hypersetup{pdftex}
 
 %%%%%%%%%%%%%%
 % supporto lettere accentate
@@ -64,8 +63,13 @@
 
 \newcommand{\source}[1]{\ensuremath{\text{source}\left[{#1}\right]}}
 \newcommand{\dest}[1]{\ensuremath{\text{dest}\left[{#1}\right]}}
+\newcommand{\isfinal}[1]{\ensuremath{\text{isFinal}\left({#1}\right)}}
 
 \newcommand{\ind}{\ensuremath{\phantom{= =}}}
+
+\usepackage[useregional]{datetime2}
+\DTMsavedate{publish day}{2021-02-10}
+\newcommand{\lastvisited}{, last visited \DTMusedate{publish day}.}
 
 
 \begin{document}
@@ -182,7 +186,9 @@
     %\bibliographystyle{plain}
     %\bibliography{biblio}\addcontentsline{toc}{chapter}{Bibliography}
 %    \nocite{*}
+	\sloppy
     \printbibliography\addcontentsline{toc}{chapter}{Bibliography}
+    \fussy
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

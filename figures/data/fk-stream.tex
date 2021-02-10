@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{
+	positioning,
+	fit,
+	arrows,
+	petri,
+	shapes.geometric,
+	shapes.symbols
+}
+
+\usepackage[active,tightpage]{preview}
+\setlength\PreviewBorder{0pt}%
+
+
+\begin{document}
+\begin{center}
+\begin{preview}
+\begin{tikzpicture}[
+	node distance=5mm,
+	shorten >=1pt,
+	->
+]
+
+%\draw[step=5mm, black, thin] (-3,-5) grid (7,5);
+
+\node[draw] (s) at (0,0) {$s(f)$};
+\node[] at (-1,0) {\ldots};
+\node[] (unprocessed) at (1,0) {\ldots};
+\path (s) edge (unprocessed);
+
+\node[draw] (r) at (1,-1) {$r(f^*)$};
+\node[] at (0,-1) {\ldots};
+\path (s) edge[dotted] (r);
+
+\node[draw, cylinder, shape border rotate=90, aspect=0.1] (db) at (2.5,-1) {db};
+\path (unprocessed) edge (db);
+\path (r) edge (db);
+
+\end{tikzpicture}
+\end{preview}
+\end{center}
+\end{document}
