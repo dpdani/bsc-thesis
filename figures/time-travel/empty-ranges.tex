@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{
+	positioning,
+	arrows,
+	arrows.meta,
+	shapes.misc,
+	shapes.geometric,
+	shapes.symbols,
+}
+
+\usepackage[active,tightpage]{preview}
+\setlength\PreviewBorder{0pt}%
+
+\usepackage{amsmath}
+\newcommand{\source}[1]{\ensuremath{\text{source}\left[{#1}\right]}}
+
+\tikzset{
+	.../.tip={[sep=1pt 1]
+		Round Cap[]. Circle[length=0pt 1] Circle[length=0pt 1] Circle[length=0pt 1, sep=0pt]}
+}
+
+\begin{document}
+\begin{center}
+\begin{preview}
+\begin{tikzpicture}[
+	node distance=5mm,
+	shorten >=1pt,
+	->,
+]
+
+%\draw[step=5mm, black, thin] (-3,-5) grid (7,5);
+
+\node[] (omega) {$\omega$};
+
+
+\node[below right=of omega, xshift=-5mm] (r1) {$r_1^t \Rightarrow r_{[t, \infty)}$};
+\node[below=of r1.west, anchor=west] (r2) {$r_2^t \Rightarrow r_{[t, t) = \emptyset}, r_{[t, \infty)}$};
+\node[below=of r2.west, anchor=west] (r3) {$r_3^t \Rightarrow r_\emptyset, r_{[t, t) = \emptyset}, r_{[t, \infty)}$};
+
+
+\node[below=of omega, yshift=-20mm] (arrow) {};
+\path[...->] (omega) edge (arrow);
+
+\end{tikzpicture}
+\end{preview}
+\end{center}
+\end{document}

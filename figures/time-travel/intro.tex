@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{
+	positioning,
+	arrows,
+	arrows.meta,
+	shapes.misc,
+	shapes.geometric,
+	shapes.symbols,
+}
+
+\usepackage[active,tightpage]{preview}
+\setlength\PreviewBorder{0pt}%
+
+\usepackage{amsmath}
+\newcommand{\source}[1]{\ensuremath{\text{source}\left[{#1}\right]}}
+
+\tikzset{
+	.../.tip={[sep=1pt 1]
+		Round Cap[]. Circle[length=0pt 1] Circle[length=0pt 1] Circle[length=0pt 1, sep=0pt]}
+}
+
+\begin{document}
+\begin{center}
+\begin{preview}
+\begin{tikzpicture}[
+	node distance=5mm,
+	shorten >=1pt,
+	->,
+]
+
+%\draw[step=5mm, black, thin] (-3,-5) grid (7,5);
+
+\node[] (p0) {|};
+\node[right=of p0] (p1) {|};
+\node[right=of p1] (p2) {|};
+\node[right=of p2] (p3) {|};
+
+\node[below=of p0, yshift=15] (r0) {$r_0^t$};
+\node[below=of p1, yshift=15] (r1) {$r_1^s$};
+\node[below=of p2, yshift=15] (r2) {$r_2^p$};
+\node[below=of p3, yshift=15] (r3) {$r_3^q$};
+
+\node[right=of p3] (end) {{\small \emph{time}}};
+\path[->...] (p0.center) edge (end);
+
+\node[below=of r0.west, anchor=west, yshift=-2.5mm] {{\small s.t. $t < s < p < q$.}};
+
+\end{tikzpicture}
+\end{preview}
+\end{center}
+\end{document}
