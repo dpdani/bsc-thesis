@@ -145,6 +145,7 @@ In this Section, the issues encountered while developing the subsystem that prov
 
 
 \subsection{Empty Validity Ranges}
+\label{sec:tt-empty-ranges}
 
 \begin{figure}
 	\centering
@@ -187,6 +188,7 @@ A better solution is presented in \S \ref{sec:squashing-transactions}.
 
 
 \subsection{Updates to Primary Keys}
+\label{sec:tt-primary-keys-updates}
 
 An update to a time traveled primary key's value is effectively indistinguishable from the consecutive application of a deletion and a subsequent insertion;\footnote{%
 	Conversely, a deletion and insertion would be indistinguishable from an update, if those two operations were performed inside a transaction, as discussed in the prior Section.
@@ -207,6 +209,7 @@ Though in the application that pertains to this Thesis updates to primary keys a
 
 
 \subsection{Ignoring Unchanged Rows}
+\label{sec:tt-unchaged-rows}
 
 In developing this system, another issue arose: since time traveled tables are generally defined as a projection over some subset $S$ of the source table's columns, it is possible for a row to receive an update that contains the previous row configuration.
 Formally,

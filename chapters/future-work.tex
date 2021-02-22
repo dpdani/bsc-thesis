@@ -1,16 +1,60 @@
 \chapter{Future Work}
 \label{ch:future}
 
+In this Chapter, possible future endeavors related to the presented system are outlined.
+None of the following is discussed thoroughly enough so as to present a finalized design or a proposal for an implementation; rather they are discussed informally, as the intention is to outline feature proposals, particular problems, or refinements that are known to subsist in the system, at the time of writing.
 
-\section{Keeping up to date}
-With the source db changes
 
-\section{Metrics}
+\section{Monitoring}
+
+This wanted, unimplemented feature of the CDC system, does not pertain to a particular interest of the marketing team, but rather of the infrastructure team, that is, SpazioDati's internal team which manages the infrastructure running the company's products.
+
+The team naturally has a desire to verify the efficacy of any system that runs on their infrastructure, and thus also of the presented CDC system, which in fact runs on it.
+
+The proposal is to include a Prometheus\footnote{%
+	See \cite{prometheus}.
+} client subsystem that is capable of providing a monitoring mechanism and tool set which can measure the overall system's efficiency.
+
 
 \section{Batching}
 \label{sec:batching}
 
-\section{Squashing Transactions Together}
+Streamed data change events are processed by the destination database one by one; that is, the Sink Connector sends the data relevant to a single data change event to the output database and awaits a positive response before proceeding to send another one.
+
+The round-trip delay between the processing of data change events inherently introduces a significant inefficiency.
+In fact, if multiple data change events were submitted to the destination database within one round-trip, i.e. in a batch, less time would be spent, by the overall system in passive I/O waiting.
+
+With regards to time travel,\footnote{%
+	As described in Chapter \ref{ch:timetravel}.
+} the introduction of this behavior effectively reintroduces the problem described in \S \ref{sec:tt-empty-ranges}.
+Nevertheless, a mechanism similar to the one described in the following \S \ref{sec:squashing-transactions} can guarantee that only a single row configuration is ever present in any batch.
+
+
+\section{Merging Transaction Records}
 \label{sec:squashing-transactions}
 
-With Kafka Streams
+As mentioned in \S \ref{sec:tt-empty-ranges}, it is possible that transactions occurring in the data source emit several data change events in one instant.
+The emitted records often contain data relevant to single rows, for instance, a transactional update may result in multiple records being emitted for one row, each possibly containing even a single attribute change.
+Of course, in the source database, changes to single attributes are not evident: the atomicity of transactions entails only the initial and final states may be retrieved from a query.
+
+Nevertheless, the multiple data change events ought to be processed separately in the current implementation of the presented CDC system.
+This means, apart from an evident inefficiency, that an inconsistent state may be read in the output database.
+
+As per the conclusion of \S \ref{sec:foreign-key}, an \emph{eventual} consistency is already to be expected, therefore this would not seem an important issue.
+Nonetheless, also for the purpose of solving the issue described in \S \ref{sec:tt-empty-ranges}, a better implementation of the CDC system, which would process a single record for each row in each transaction, may be of interest.
+
+Making use of the aforementioned Kafka Streams API it is possible to develop a mechanism that merges transaction related records together, before they are processed by the Sink Connector, presented in Listing \ref{src:eu.spaziodati.metrics/connectors/PostgresSinkTask.scala}.
+The Debezium Source Connector provides the transaction's identifier of each record; this can be utilized to correlate separate records and, by also surveying the table, and the primary key's value, achieve the desired result.
+
+With this achievement, it would be possible to make use of the data source's change event emission time, instead of the output database's system clock.
+This is desirable because a record may be processed by the CDC system even long after it was emitted by the source; for instance, consider a case in which the system's operation is halted to allow for an upgrade.
+
+
+\section{Keeping up to date}
+
+Finally, one conceptually trivial endeavor, albeit possibly highly time consuming, comes from the necessity of keeping the destination database sound with the source database.
+
+Of course, significant changes in the data source's contents will impact the data residing in the output database.
+For instance, the change of table or column names, would require the change to be replicated in their destination counterparts.
+
+Additionally, changes in the particular interests of the marketing team, will need to impact the CDC system; e.g. a new table needs to be processed.
