@@ -36,13 +36,15 @@ Conversely, a Consumer will ask Kafka to read a record from a particular topic, 
 
 A topic is further divided into so called partitions.\footnote{%
 	Therefore, to be precise, each single topic partition is a log and a topic is a set of logs.
-	Nonetheless, in our use-case, as discussed shortly, we are not interested into splitting topics into multiple partitions, thus leaving little space to imprecision.
+	Nonetheless, in our use-case, as discussed shortly, we will not split topics into multiple partitions, thus leaving little space to imprecision.
 }
 Generally, this division is most useful when considering the capability of some greater system, which is in part composed by Kafka, to meet increasing computational demands.
 This is achieved by dividing homogeneous records into different partitions that are read by separate Consumers, thus enabling greater simplicity in the addition of Consumers, therefore expanding the computing capability assigned to the consumption of records.
 
-Since each partition is a log in itself, records are inherently ordered, but ordering \emph{between} partitions is not guaranteed; hence, partitioning topics, in our use-case, is not a viable option for increasing computational power, since ordering of data change events is key when reconstructing the source tables (cf. \S \ref{sec:tables-streams}).
-Meeting greater computational demands will therefore have to be achieved through different means, such as increasing the computing power assigned to individual Consumers.
+Since each partition is a log in itself, records are inherently ordered, but ordering \emph{between} partitions is not guaranteed, unless records are assigned to some key, which in our use case coincides with the primary key.
+If this assignment is made, then records pertaining to a particular key will always be assigned to the same partition; hence, the necessary ordering of streamed records is preserved (cf. \S \ref{sec:tables-streams}).
+Meeting greater computational demands can therefore be achieved through this mean.
+Nevertheless, the presented implementation does not make use of this mechanism, because of development time limitations.
 
 In our use case each table that is being reproduced from the data source, will be assigned to a different topic.
 Each table-topic will be read from separate Consumers, as better explained in the following \S \ref{sec:kafka-connect}.
@@ -88,7 +90,7 @@ Kafka Streams is a library that conveys various utilities for developing systems
 In particular, this underlies the concept of a stream, intended as the computation carried out by a chain of Producers that write to certain topics, Consumers that read from said topics as well as produce to other topics, and so forth.
 
 Recalling our previous assertions on the duality of streams and tables (cf. \S \ref{sec:tables-streams}), let us utilize such a notion to state the usage of Kafka Streams in our application.
-Since a stream can be interpreted as a table, modifications to a stream constitute changes to a table, thus the operations of relational algebra can be adapted and applied to streams as well.
+Since a stream can be interpreted as a table, modifications coherently applied to all records of a stream constitute changes to a table, thus the operations of relational algebra can be adapted and applied to streams as well.
 I will not endeavor into a formal demonstration of this notion, nonetheless I will try to convince the reader that this is true in the code provided.
 
 In our case, Kafka Streams are employed for the aggregations regarding certain tables, that will be described in \S \ref{sec:aggregations}.
