@@ -32,7 +32,6 @@ In order to avoid disclosing information relevant to their intellectual property
 In particular the names of the eleven tables referenced have been replaced with the Greek letters $\alpha$, $\beta$, $\gamma$, $\delta$, $\epsilon$, $\zeta$, $\eta$, $\theta$, $\iota$, $\kappa$, and $\lambda$.
 Additionally, referenced column names do not represent the real names used in SpazioDati; nevertheless they provide a sensible metaphor to their actual counterpart. 
 
-TODO
 The contents of this Thesis have been reviewed by SpazioDati and they have acknowledged this document does not contain information sensitive to either their customers or their intellectual properties.
 
 
@@ -245,9 +244,9 @@ A grouping with multiple keys, is still a grouping (i.e. a set of relations).
 \end{observation}
 
 \begin{definition}[Grouping selection]\label{def:sigma*}
-Let $H$ be a grouping, $C$ the set of grouping keys of $H$, \emph{f}, and \emph{h} two aggregation functions\footnote{%
+Let $H$ be a grouping, $C$ the set of grouping keys of $H$, \emph{f}, and \emph{h} two aggregation functions,\footnote{%
 Here ``aggregation functions'' is used to indicate some functions that produce a single result from an input set. E.g. $\sum$, $\min$, and so on.
-}, and $c_i$, and $c_j$ two columns of any group in $H$.
+} and $c_i$, and $c_j$ two columns of any group in $H$.
 The grouping selection operation $\sigma^*$ is defined as the grouping
 $$
 \sigma^*_{f(c_i), h(c_j), \dots}(H) = \Big\{

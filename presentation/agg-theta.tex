@@ -1,0 +1,36 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\usepackage[active,tightpage]{preview}
+\setlength\PreviewBorder{0pt}%
+
+
+\newcommand{\source}[1]{\ensuremath{\text{source}\left[{#1}\right]}}
+\newcommand{\dest}[1]{\ensuremath{\text{dest}\left[{#1}\right]}}
+\newcommand{\isfinal}[1]{\ensuremath{\text{isFinal}\left({#1}\right)}}
+
+\newcommand{\ind}{\ensuremath{\phantom{= =}}}
+
+\usepackage{setspace}\onehalfspacing
+\AtBeginDocument{%
+	\addtolength\abovedisplayskip{-\baselineskip}%
+	\addtolength\belowdisplayskip{-\baselineskip}%
+}
+
+
+\begin{document}
+\begin{center}
+\begin{preview}
+	\hspace*{-3.65cm}\vbox{
+	\begin{align*}
+		&\dest{\theta} := \gamma_{\text{user, day, count} (*) \rightarrow n} \bigl( \\
+		&\ind \sigma_{\isfinal{*}}\bigl( \source{\theta} \bigr) \nonumber \\
+		&\bigr) \nonumber\\
+	\end{align*}
+	}\hspace*{-3.65cm}
+\end{preview}
+\end{center}
+\end{document}

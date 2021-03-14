@@ -1,0 +1,37 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\usepackage[active,tightpage]{preview}
+\setlength\PreviewBorder{0pt}%
+
+
+\newcommand{\source}[1]{\ensuremath{\text{source}\left[{#1}\right]}}
+\newcommand{\dest}[1]{\ensuremath{\text{dest}\left[{#1}\right]}}
+\newcommand{\isfinal}[1]{\ensuremath{\text{isFinal}\left({#1}\right)}}
+
+\newcommand{\ind}{\ensuremath{\phantom{= =}}}
+
+\usepackage{setspace}\onehalfspacing
+\AtBeginDocument{%
+	\addtolength\abovedisplayskip{-\baselineskip}%
+	\addtolength\belowdisplayskip{-\baselineskip}%
+}
+
+
+\begin{document}
+\begin{center}
+\begin{preview}
+	\hspace*{-2.95cm}\vbox{
+		\begin{align*}
+			&\dest{\lambda} := \pi_{\dest{\alpha}.\text{id} \text{, day, class, } n} \bigl(\\
+			&\ind \dest{\alpha} \bowtie \gamma_{\text{email, day, class, count} (*) \rightarrow n} \bigl( \nonumber\\
+			&\ind\ind \source{\lambda} \nonumber\\
+			&\bigr)\bigr) \nonumber\\
+		\end{align*}
+	}\hspace*{-2.95cm}
+\end{preview}
+\end{center}
+\end{document}
